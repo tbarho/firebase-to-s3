@@ -1,7 +1,13 @@
 #! /app/.heroku/node/bin/node
+var config        = require('../config');
 var RSVP          = require('rsvp');
 var firebaseUtils = require('../utils/firebase');
 var fbRef         = firebaseUtils.initializeFirebase();
+var AWS           = require('aws-sdk');
+
+AWS.config.region = 'us-east-1';
+
+var s3            = new AWS.S3({});
 
 firebaseUtils
   .authAsAdmin(fbRef)
@@ -13,7 +19,28 @@ firebaseUtils
     });
   })
   .then(function(data) {
-    console.log(data);
+    return new RSVP.Promise(function(resolve, reject) {
+      var now      = new Date();
+      var filename = 'backups/' + now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate() + '-' + now.getTime() + '.json';
+
+      data = JSON.stringify(data);
+
+      s3.putObject({
+        Bucket      : config.S3_BUCKET,
+        Key         : filename,
+        Body        : data,
+        ContentType : 'application/json'
+      }, function(err/*, data*/) {
+        if(err) {
+          reject(err);
+        } else {
+          resolve(filename);
+        }
+      });
+    });
+  })
+  .then(function(filename) {
+    console.log('Backup complete - '+filename);
     process.exit();
   })
   .catch(function(err) {
