@@ -1,0 +1,15 @@
+#! /app/bin/node
+
+var firebaseUtils = require('./utils/firebase');
+var fbRef         = firebaseUtils.initializeFirebase();
+
+fbRef
+  .get('/')
+  .then(function(data) {
+    console.log(data);
+    process.exit();
+  })
+  .catch(function(err) {
+    console.log(err);
+    process.exit();
+  });
