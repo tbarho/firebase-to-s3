@@ -6,7 +6,7 @@ var fbRef         = firebaseUtils.initializeFirebase();
 firebaseUtils
   .authAsAdmin(fbRef)
   .then(function() {
-    return RSVP.Promise(function(resolve) {
+    return new RSVP.Promise(function(resolve) {
       fbRef.once('value', function(sn) {
         resolve(sn.val() || {});
       });
