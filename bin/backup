@@ -1,4 +1,4 @@
-#! /app/bin/node
+#! /app/.heroku/node/bin/node
 var firebaseUtils = require('../utils/firebase');
 var fbRef         = firebaseUtils.initializeFirebase();
 
