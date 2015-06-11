@@ -2,8 +2,8 @@
 var firebaseUtils = require('../utils/firebase');
 var fbRef         = firebaseUtils.initializeFirebase();
 
-fbRef
-  .get('/')
+firebaseUtils
+  .get(fbRef.root())
   .then(function(data) {
     console.log(data);
     process.exit();
