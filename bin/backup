@@ -5,7 +5,7 @@ var fbRef         = firebaseUtils.initializeFirebase();
 firebaseUtils
   .authAsAdmin(fbRef)
   .then(function() {
-    return firebaseUtils.get(fbRef.root())
+    return firebaseUtils.get(fbRef)
   })
   .then(function(data) {
     console.log(data);
