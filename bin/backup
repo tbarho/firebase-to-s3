@@ -1,6 +1,5 @@
 #! /app/bin/node
-
-var firebaseUtils = require('./utils/firebase');
+var firebaseUtils = require('../utils/firebase');
 var fbRef         = firebaseUtils.initializeFirebase();
 
 fbRef
