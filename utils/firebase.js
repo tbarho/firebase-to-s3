@@ -1,15 +1,17 @@
 var Firebase = require('firebase');
 var RSVP     = require('rsvp');
 var Promise  = RSVP.Promise;
+var config   = require('../config');
 
-var FIREBASE_SECRET        = 'ZFT3zCjn3j0Twj5ClRqOZLmnYgRZECukUDF1v89h';
+var FIREBASE_SECRET        = config.FIREBASE_SECRET;
+var FIREBASE_ROOT          = config.FIREBASE_ROOT;
 var FirebaseTokenGenerator = require('firebase-token-generator');
 
-var url = 'https://reman-tmp.firebaseio.com/';
 var fbRef;
+
 module.exports.initializeFirebase = function() {
   if (!fbRef) {
-    fbRef = new Firebase(url);
+    fbRef = new Firebase(FIREBASE_ROOT);
   }
   return fbRef;
 };
