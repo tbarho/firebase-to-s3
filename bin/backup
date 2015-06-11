@@ -1,11 +1,16 @@
 #! /app/.heroku/node/bin/node
+var RSVP          = require('rsvp');
 var firebaseUtils = require('../utils/firebase');
 var fbRef         = firebaseUtils.initializeFirebase();
 
 firebaseUtils
   .authAsAdmin(fbRef)
   .then(function() {
-    return firebaseUtils.get(fbRef)
+    return RSVP.Promise(function(resolve) {
+      fbRef.once('value', function(sn) {
+        resolve(sn.val() || {});
+      });
+    });
   })
   .then(function(data) {
     console.log(data);
