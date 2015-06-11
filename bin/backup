@@ -3,7 +3,10 @@ var firebaseUtils = require('../utils/firebase');
 var fbRef         = firebaseUtils.initializeFirebase();
 
 firebaseUtils
-  .get(fbRef.root())
+  .authAsAdmin(fbRef)
+  .then(function() {
+    return firebaseUtils.get(fbRef.root())
+  })
   .then(function(data) {
     console.log(data);
     process.exit();
