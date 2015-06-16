@@ -4,10 +4,15 @@ var RSVP          = require('rsvp');
 var firebaseUtils = require('../utils/firebase');
 var fbRef         = firebaseUtils.initializeFirebase();
 var AWS           = require('aws-sdk');
+var crypto        = require('crypto');
 
 AWS.config.region = 'us-east-1';
 
 var s3            = new AWS.S3({});
+
+function getFilename(data) {
+  return 'backups/' + crypto.createHash('md5').update(JSON.stringify(data)).digest('hex') + '.json';
+}
 
 firebaseUtils
   .authAsAdmin(fbRef)
@@ -20,8 +25,7 @@ firebaseUtils
   })
   .then(function(data) {
     return new RSVP.Promise(function(resolve, reject) {
-      var now      = new Date();
-      var filename = 'backups/' + now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate() + '-' + now.getTime() + '.json';
+      var filename = getFilename(data);
 
       data = JSON.stringify(data);
 
