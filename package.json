@@ -10,7 +10,10 @@
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.1.33",
+<<<<<<< HEAD
     "crypto": "0.0.3",
+=======
+>>>>>>> d3cd9c6e0fd33b981c49f8174df4651001419298
     "firebase": "^2.2.7",
     "firebase-token-generator": "^2.0.0",
     "rsvp": "^3.0.18"

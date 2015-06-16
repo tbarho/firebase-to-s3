@@ -26,8 +26,7 @@ firebaseUtils
   .then(function(data) {
     return new RSVP.Promise(function(resolve, reject) {
       var filename = getFilename(data);
-
-      data = JSON.stringify(data);
+      data         = JSON.stringify(data);
 
       s3.putObject({
         Bucket      : config.S3_BUCKET,
